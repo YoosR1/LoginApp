@@ -1,12 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Pressable, ImageBackground } from 'react-native';
+import { 
+    StyleSheet, 
+    Text, 
+    View, 
+    ScrollView, 
+    Image, 
+    TextInput, 
+    Pressable, 
+    ImageBackground, 
+    ScrollViewBase
+} from 'react-native';
 
 
 export default function App() {
     return (
         <View style={styles.container}>
-            {/* <Text>UCFGO</Text> */}
             <ImageBackground
                 style={styles.bgImage}
                 source={require('./assets/bgcrop.jpg')}>
@@ -15,25 +24,66 @@ export default function App() {
                     source={require('./assets/Logo.png')}
                 ></Image>
 
-                <View style={styles.loginForm}>
-                    
-                    <Text style={styles.inputBoxText}>
-                        Username:</Text>
-                    <TextInput style={styles.inputBox}
+                <ScrollView horizontal pagingEnabled style={styles.scrollForm}>
+                    {/* Login */}
+                    <View style={styles.login}>
+                        <Text>Login Placeholder</Text>
+                        <Text style={styles.inputBoxText}>
+                            Username:</Text>
+                        <TextInput style={styles.inputBox}
 
-                    />
-                    <Text style={styles.inputBoxText}>
-                        Password:</Text>
-                    <TextInput style={styles.inputBox}
+                        />
+                        <Text style={styles.inputBoxText}>
+                            Password:</Text>
+                        <TextInput style={styles.inputBox}
 
-                    />
-                    <View style={styles.loginButton}>
-                        {/* todo: connect login api */}
-                        <Pressable /*onPress={onPressLogIn}*/>
-                            <Text style={styles.loginButtonText}>Confirm</Text>
-                        </Pressable> 
+                        />
+                        <Text style={styles.smallText}>
+                            {/* todo: link to register page */}
+                            Don't have an account? <Text style={{textDecorationLine: 'underline'}}>Register</Text>
+                        </Text>
+                        <View style={styles.loginButton}>
+                            {/* todo: connect login api */}
+                            <Pressable /*onPress={onPressLogIn}*/>
+                                <Text style={styles.loginButtonText}>Confirm</Text>
+                            </Pressable> 
+                        </View>
                     </View>
-                </View>
+                    {/* Register */}
+                    <View style={styles.login}>
+                        <Text>Register Placeholder</Text>
+                        <Text style={styles.inputBoxText}>
+                            Username:</Text>
+                        <TextInput style={styles.inputBox}
+
+                        />
+                        <Text style={styles.inputBoxText}>
+                            Password:</Text>
+                        <TextInput style={styles.inputBox}
+
+                        />
+                        <Text style={styles.inputBoxText}>
+                            Name:</Text>
+                        <TextInput style={styles.inputBox}
+
+                        />
+                        <Text style={styles.inputBoxText}>
+                            Email:</Text>
+                        <TextInput style={styles.inputBox}
+
+                        />
+                        <Text style={styles.smallText}>
+                            {/* todo: link to login page */}
+                            Already have an account? <Text style={{textDecorationLine: 'underline'}}>Log In</Text>
+                        </Text>
+                        <View style={styles.loginButton}>
+                            {/* todo: connect login api */}
+                            <Pressable /*onPress={onPressLogIn}*/>
+                                <Text style={styles.loginButtonText}>Confirm</Text>
+                            </Pressable> 
+                        </View>
+                    </View>
+                </ScrollView>
             </ImageBackground>
             <StatusBar style="auto" />
         </View>
@@ -44,26 +94,38 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         // backgroundColor: '#fff',
-        // alignItems: 'center',
-        // justifyContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     logo: {
         position: 'absolute',
-        // resizeMode: 'stretch',
         alignSelf: 'center',
         top: 50
     },
     bgImage: {
-        objectFit: 'stretch',
-        flex: 1,
-        // justifyContent
+        // objectFit: 'stretch',
+        // flex: 1,
+        height: '100%',
+        position: 'absolute',
+        tintColor: '#000'
     },
-    loginForm: {
-        minWidth: '80%',
+    scrollForm: {
+        width: 350,
+        height: 500,
         marginHorizontal: '10%',
-        marginVertical: '50%',
-        backgroundColor: '#f2bd00',
+        marginTop: '50%',
+        marginBottom: '30%',
+        backgroundColor: '#F2BD00',
         borderRadius: 30,
+        // alignSelf: 'center',
+        // alignContent: 'center',
+        // justifyContent: 'center',
+    },
+    login: {
+        // flex: 1,
+        // margin: 50,
+        width: 300,
+        margin: 25,
         alignContent: 'center',
         justifyContent: 'center'
     },
@@ -78,9 +140,13 @@ const styles = StyleSheet.create({
     },
     inputBoxText: {
         marginHorizontal: 10,
-        marginVertical: 5,
+        marginVertical: 3,
         fontSize: 25,
         fontWeight: '500'
+    },
+    smallText: {
+        fontSize: 20,
+        textAlign: 'center'
     },
     loginButton: {
         // width: '50%',
