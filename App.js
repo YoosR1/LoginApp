@@ -9,9 +9,8 @@ import {
     TextInput, 
     Pressable, 
     ImageBackground, 
-    ScrollViewBase
+    Dimensions
 } from 'react-native';
-
 
 export default function App() {
     return (
@@ -23,8 +22,13 @@ export default function App() {
                     style={styles.logo}
                     source={require('./assets/Logo.png')}
                 ></Image>
-
-                <ScrollView horizontal pagingEnabled style={styles.scrollForm}>
+                
+                <ScrollView
+                    horizontal 
+                    pagingEnabled 
+                    // scrollEnabled={false}
+                    // nestedScrollEnabled={false}
+                    style={styles.scrollForm}>
                     {/* Login */}
                     <View style={styles.login}>
                         <Text>Login Placeholder</Text>
@@ -90,6 +94,8 @@ export default function App() {
     );
 }
 
+const {windowHeight, windowWidth} = Dimensions.get('window')
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -100,18 +106,18 @@ const styles = StyleSheet.create({
     logo: {
         position: 'absolute',
         alignSelf: 'center',
-        top: 50
+        top: '5%'
     },
     bgImage: {
-        // objectFit: 'stretch',
+        objectFit: 'fill',
         // flex: 1,
         height: '100%',
+        // width: windowWidth,
         position: 'absolute',
         tintColor: '#000'
     },
     scrollForm: {
-        width: 350,
-        height: 500,
+        flex: 1,
         marginHorizontal: '10%',
         marginTop: '50%',
         marginBottom: '30%',
@@ -122,9 +128,7 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
     },
     login: {
-        // flex: 1,
-        // margin: 50,
-        width: 300,
+        flex: 1,
         margin: 25,
         alignContent: 'center',
         justifyContent: 'center'
