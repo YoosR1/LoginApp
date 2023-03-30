@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, {useRef, useState} from 'react';
 import { 
     StyleSheet, 
     Text, 
@@ -9,10 +9,28 @@ import {
     TextInput, 
     Pressable, 
     ImageBackground, 
-    Dimensions
+    Dimensions,
+    Animated
 } from 'react-native';
+import FormSelectorBtn from './components/FormSelectorBtn.js';
+
+const {windowHeight, windowWidth} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 export default function App() {
+    const animation = useRef(new Animated.Value(0)).current;
+    const scrollView = useRef();
+
+    const interpolateL = animation.interpolate({
+        inputRange: [0, width],
+        outputRange: ['rgba(27,27,51,1)', 'rgba(27,27,51,0.4)'],
+    });
+    const interpolateR = animation.interpolate({
+        inputRange: [0, width],
+        outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)'],
+    });
+    
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -23,78 +41,93 @@ export default function App() {
                     source={require('./assets/Logo.png')}
                 ></Image>
                 
-                <ScrollView
-                    horizontal 
-                    pagingEnabled 
-                    // scrollEnabled={false}
-                    // nestedScrollEnabled={false}
-                    style={styles.scrollForm}>
-                    {/* Login */}
-                    <View style={styles.login}>
-                        <Text>Login Placeholder</Text>
-                        <Text style={styles.inputBoxText}>
-                            Username:</Text>
-                        <TextInput style={styles.inputBox}
-
+                <View style={styles.form}>
+                    {/* <View>
+                        <FormSelectorBtn
+                            style={styles.formSelL}
+                            backgroundColor={interpolateL}
+                            title='Login'
+                            onPress={() => scrollView.current.scrollTo({ x: 0 })}
                         />
-                        <Text style={styles.inputBoxText}>
-                            Password:</Text>
-                        <TextInput style={styles.inputBox}
-
+                        <FormSelectorBtn
+                            style={styles.formSelR}
+                            backgroundColor={interpolateR}
+                            title='Register'
+                            onPress={() => scrollView.current.scrollTo({ x: windowWidth })}
                         />
-                        <Text style={styles.smallText}>
-                            {/* todo: link to register page */}
-                            Don't have an account? <Text style={{textDecorationLine: 'underline'}}>Register</Text>
-                        </Text>
-                        <View style={styles.loginButton}>
-                            {/* todo: connect login api */}
-                            <Pressable /*onPress={onPressLogIn}*/>
-                                <Text style={styles.loginButtonText}>Confirm</Text>
-                            </Pressable> 
+                    </View> */}
+                    <ScrollView
+                        ref={scrollView}
+                        horizontal 
+                        pagingEnabled 
+                        // scrollEnabled={false}
+                        // nestedScrollEnabled={false}
+                        style={styles.scrollForm}>
+                        {/* Login */}
+                        <View style={styles.login}>
+                            <Text>Login Placeholder</Text>
+                            <Text style={styles.inputBoxText}>
+                                Username:</Text>
+                            <TextInput style={styles.inputBox}
+
+                            />
+                            <Text style={styles.inputBoxText}>
+                                Password:</Text>
+                            <TextInput style={styles.inputBox}
+
+                            />
+                            <Text style={styles.smallText}>
+                                {/* todo: link to register page */}
+                                Don't have an account? <Text style={{textDecorationLine: 'underline'}}>Register</Text>
+                            </Text>
+                            <View style={styles.loginButton}>
+                                {/* todo: connect login api */}
+                                <Pressable /*onPress={onPressLogIn}*/>
+                                    <Text style={styles.loginButtonText}>Confirm</Text>
+                                </Pressable> 
+                            </View>
                         </View>
-                    </View>
-                    {/* Register */}
-                    <View style={styles.login}>
-                        <Text>Register Placeholder</Text>
-                        <Text style={styles.inputBoxText}>
-                            Username:</Text>
-                        <TextInput style={styles.inputBox}
+                        {/* Register */}
+                        <View style={styles.login}>
+                            <Text>Register Placeholder</Text>
+                            <Text style={styles.inputBoxText}>
+                                Username:</Text>
+                            <TextInput style={styles.inputBox}
 
-                        />
-                        <Text style={styles.inputBoxText}>
-                            Password:</Text>
-                        <TextInput style={styles.inputBox}
+                            />
+                            <Text style={styles.inputBoxText}>
+                                Password:</Text>
+                            <TextInput style={styles.inputBox}
 
-                        />
-                        <Text style={styles.inputBoxText}>
-                            Name:</Text>
-                        <TextInput style={styles.inputBox}
+                            />
+                            <Text style={styles.inputBoxText}>
+                                Name:</Text>
+                            <TextInput style={styles.inputBox}
 
-                        />
-                        <Text style={styles.inputBoxText}>
-                            Email:</Text>
-                        <TextInput style={styles.inputBox}
+                            />
+                            <Text style={styles.inputBoxText}>
+                                Email:</Text>
+                            <TextInput style={styles.inputBox}
 
-                        />
-                        <Text style={styles.smallText}>
-                            {/* todo: link to login page */}
-                            Already have an account? <Text style={{textDecorationLine: 'underline'}}>Log In</Text>
-                        </Text>
-                        <View style={styles.loginButton}>
-                            {/* todo: connect login api */}
-                            <Pressable /*onPress={onPressLogIn}*/>
-                                <Text style={styles.loginButtonText}>Confirm</Text>
-                            </Pressable> 
+                            />
+                            <Text style={styles.smallText}>
+                                {/* todo: link to login page */}
+                                Already have an account? <Text style={{textDecorationLine: 'underline'}}>Log In</Text>
+                            </Text>
+                            <View style={styles.loginButton}>
+                                {/* todo: connect login api */}
+                                <Pressable /*onPress={onPressLogIn}*/>
+                                    <Text style={styles.loginButtonText}>Confirm</Text>
+                                </Pressable> 
+                            </View>
                         </View>
-                    </View>
-                </ScrollView>
+                    </ScrollView>
+                </View>
             </ImageBackground>
             <StatusBar style="auto" />
         </View>
     );
 }
-
-const {windowHeight, windowWidth} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
     container: {
@@ -116,16 +149,19 @@ const styles = StyleSheet.create({
         position: 'absolute',
         tintColor: '#000'
     },
-    scrollForm: {
+    form: {
         flex: 1,
         marginHorizontal: '10%',
         marginTop: '50%',
         marginBottom: '30%',
         backgroundColor: '#F2BD00',
         borderRadius: 30,
-        // alignSelf: 'center',
-        // alignContent: 'center',
-        // justifyContent: 'center',
+        alignSelf: 'center',
+        alignContent: 'center',
+        justifyContent: 'center',
+    },
+    scrollForm: {
+        // flex: 2
     },
     login: {
         flex: 1,
