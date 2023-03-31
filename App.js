@@ -56,9 +56,11 @@ export default function App() {
         }).then((response) => response.json()).then((json) => {
             if(json.id != -1){
                console.log("woohoo!")
+               setLoginMessage("Logged in successfully")
             }
             else{
                 console.log("boohoo")
+                setLoginMessage("Username or password incorrect")
             }
         }).catch((error) => {
             console.error(error);
@@ -149,6 +151,7 @@ export default function App() {
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
+                            <Text>{loginMessage}</Text>
                         </View>
                         {/* Register */}
                         <View style={styles.login}>
@@ -191,6 +194,7 @@ export default function App() {
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
+                            <Text>{registerMessage}</Text>
                         </View>
                     </ScrollView>
                 </View>
@@ -222,6 +226,7 @@ const styles = StyleSheet.create({
     },
     form: {
         flex: 1,
+        minHeight: 500,
         marginHorizontal: '10%',
         marginTop: '50%',
         marginBottom: '30%',
@@ -236,7 +241,8 @@ const styles = StyleSheet.create({
     },
     login: {
         flex: 1,
-        margin: 25,
+        // margin: 25,
+        width: windowWidth,
         alignContent: 'center',
         justifyContent: 'center'
     },
