@@ -18,6 +18,18 @@ const {windowHeight, windowWidth} = Dimensions.get('window');
 const { width } = Dimensions.get('window');
 
 export default function App() {
+    const [loginUsername, setLoginUsername] = useState(' ');
+    const [loginPassword, setLoginPassword] = useState(' ');
+
+    const [registerUsername, setRegisterUsername] = useState(' ');
+    const [registerPassword, setRegisterPassword] = useState(' ');
+    const [registerEmail, setRegisterEmail] = useState(' ');
+    const [registerName, setRegisterName] = useState(' ');
+
+    //fill these with values which tell the user what is happening
+    const [loginMessage, setLoginMessage] = useState(' ');
+    const [registerMessage, setRegisterMessage] = useState(' ');
+
     const animation = useRef(new Animated.Value(0)).current;
     const scrollView = useRef();
 
@@ -30,6 +42,53 @@ export default function App() {
         outputRange: ['rgba(27,27,51,0.4)', 'rgba(27,27,51,1)'],
     });
     
+    const onPressLogIn = async() => {
+        await fetch('https://ucf-go.herokuapp.com/api/login', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+           login: loginUsername,
+           password: loginPassword
+        })
+        }).then((response) => response.json()).then((json) => {
+            if(json.id != -1){
+               console.log("woohoo!")
+            }
+            else{
+                console.log("boohoo")
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+    const onPressRegister = async() => {
+        await fetch('https://ucf-go.herokuapp.com/api/register', {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+           username: registerUsername,
+           password: registerPassword,
+           email: registerEmail,
+           name: registerName
+        })
+        }).then((response) => response.json()).then((json) => {
+            //check postman when heroku is alive to see if the errors are the ones here.
+            if(error == "N/A"){
+               console.log("woohoo!")
+            }
+            else{
+                console.log("boohoo")
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
 
     return (
         <View style={styles.container}>
@@ -68,13 +127,17 @@ export default function App() {
                             <Text>Login Placeholder</Text>
                             <Text style={styles.inputBoxText}>
                                 Username:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput
+                                style={styles.inputBox}
+                                //value = {loginUsername}
+                               onChangeText={newText => setLoginUsername(newText)}
                             />
                             <Text style={styles.inputBoxText}>
                                 Password:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput 
+                                style={styles.inputBox}
+                                //value = {loginPassword}
+                                onChangeText={newText => setLoginPassword(newText)}
                             />
                             <Text style={styles.smallText}>
                                 {/* todo: link to register page */}
@@ -82,7 +145,7 @@ export default function App() {
                             </Text>
                             <View style={styles.loginButton}>
                                 {/* todo: connect login api */}
-                                <Pressable /*onPress={onPressLogIn}*/>
+                                <Pressable onPress={onPressLogIn}>
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
@@ -92,23 +155,31 @@ export default function App() {
                             <Text>Register Placeholder</Text>
                             <Text style={styles.inputBoxText}>
                                 Username:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput 
+                                style={styles.inputBox}
+                                //value={registerUsername}
+                                onChangeText={newText => setRegisterUsername(newText)}
                             />
                             <Text style={styles.inputBoxText}>
                                 Password:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput 
+                                style={styles.inputBox}
+                                //value={registerPassword}
+                                onChangeText={newText => setRegisterPassword(newText)}
                             />
                             <Text style={styles.inputBoxText}>
                                 Name:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput 
+                                style={styles.inputBox}
+                                //value={registerName}
+                                onChangeText={newText => setRegisterName(newText)}
                             />
                             <Text style={styles.inputBoxText}>
                                 Email:</Text>
-                            <TextInput style={styles.inputBox}
-
+                            <TextInput 
+                                style={styles.inputBox}
+                                //value={registerEmail}
+                                onChangeText={newText => setRegisterEmail(newText)}
                             />
                             <Text style={styles.smallText}>
                                 {/* todo: link to login page */}
@@ -116,7 +187,7 @@ export default function App() {
                             </Text>
                             <View style={styles.loginButton}>
                                 {/* todo: connect login api */}
-                                <Pressable /*onPress={onPressLogIn}*/>
+                                <Pressable onPress={onPressRegister}>
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
