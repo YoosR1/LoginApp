@@ -55,11 +55,11 @@ export default function App() {
         })
         }).then((response) => response.json()).then((json) => {
             if(json.id != -1){
-               console.log("woohoo!")
+               console.log("Log in success")
                setLoginMessage("Logged in successfully")
             }
             else{
-                console.log("boohoo")
+                console.log("Log in failed")
                 setLoginMessage("Username or password incorrect")
             }
         }).catch((error) => {
@@ -81,11 +81,13 @@ export default function App() {
         })
         }).then((response) => response.json()).then((json) => {
             //check postman when heroku is alive to see if the errors are the ones here.
-            if(error == "N/A"){
-               console.log("woohoo!")
+            if(json.error == "N/A"){
+               console.log("Register success")
+               setRegisterMessage("User registered successfully")
             }
             else{
-                console.log("boohoo")
+                console.log("Register failure")
+                setRegisterMessage("User invalid")
             }
         }).catch((error) => {
             console.error(error);
@@ -151,7 +153,9 @@ export default function App() {
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
-                            <Text>{loginMessage}</Text>
+                            <Text style={styles.smallText}>
+                                {loginMessage}
+                            </Text>
                         </View>
                         {/* Register */}
                         <View style={styles.login}>
@@ -194,7 +198,9 @@ export default function App() {
                                     <Text style={styles.loginButtonText}>Confirm</Text>
                                 </Pressable> 
                             </View>
-                            <Text>{registerMessage}</Text>
+                            <Text style={styles.smallText}>
+                                {registerMessage}
+                            </Text>
                         </View>
                     </ScrollView>
                 </View>
