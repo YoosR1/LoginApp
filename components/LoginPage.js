@@ -49,13 +49,13 @@ export default function LoginPage() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-           login: loginUsername,
-           password: loginPassword
+            login: loginUsername,
+            password: loginPassword
         })
         }).then((response) => response.json()).then((json) => {
             if(json.id != -1){
-               console.log("Log in success")
-               setLoginMessage("Logged in successfully")
+                console.log("Log in success")
+                setLoginMessage("Logged in successfully")
             }
             else{
                 console.log("Log in failed")
@@ -73,10 +73,10 @@ export default function LoginPage() {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-           username: registerUsername,
-           password: registerPassword,
-           email: registerEmail,
-           name: registerName
+            username: registerUsername,
+            password: registerPassword,
+            email: registerEmail,
+            name: registerName
         })
         }).then((response) => response.json()).then((json) => {
             if(json.error == "N/A"){
